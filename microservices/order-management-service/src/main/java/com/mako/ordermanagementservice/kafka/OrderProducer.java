@@ -1,6 +1,6 @@
 package com.mako.ordermanagementservice.kafka;
 
-import com.mako.model.events.OrderEvent;
+import com.mako.event.OrderEvent;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

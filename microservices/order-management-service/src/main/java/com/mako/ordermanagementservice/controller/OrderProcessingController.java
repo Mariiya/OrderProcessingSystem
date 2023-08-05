@@ -1,6 +1,6 @@
 package com.mako.ordermanagementservice.controller;
 
-import com.mako.model.Order;
+import com.mako.dto.OrderDTO;
 import com.mako.ordermanagementservice.service.OrderProcessingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +22,8 @@ public class OrderProcessingController {
     }
 
     @PostMapping()
-    public ResponseEntity<String> createOrder(@RequestBody Order order) {
-        Order newOrder = orderService.createOrder(order);
+    public ResponseEntity<String> createOrder(@RequestBody OrderDTO order) {
+        OrderDTO newOrder = orderService.createOrder(order);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")

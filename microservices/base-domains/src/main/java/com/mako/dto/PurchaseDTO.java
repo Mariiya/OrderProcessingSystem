@@ -1,4 +1,4 @@
-package com.mako.model;
+package com.mako.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,11 +9,8 @@ import java.math.BigInteger;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
-
+public class PurchaseDTO {
     private BigInteger id;
-    private String name;
+    private ProductDTO product;
     private int quantity;
-    private double price;
-
 }

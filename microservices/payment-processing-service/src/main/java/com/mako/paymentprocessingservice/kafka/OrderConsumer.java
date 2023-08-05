@@ -1,6 +1,6 @@
 package com.mako.paymentprocessingservice.kafka;
 
-import com.mako.model.events.OrderEvent;
+import com.mako.event.OrderEvent;
 import com.mako.paymentprocessingservice.service.PaymentProcessingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

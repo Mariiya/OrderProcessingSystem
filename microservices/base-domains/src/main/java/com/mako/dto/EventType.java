@@ -1,4 +1,4 @@
-package com.mako.model;
+package com.mako.dto;
 
 public enum EventType {
     CREATE_ORDER,

@@ -1,7 +1,7 @@
-package com.mako.model.events;
+package com.mako.event;
 
-import com.mako.model.EventType;
-import com.mako.model.Order;
+import com.mako.dto.EventType;
+import com.mako.dto.OrderDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderEvent {
-    private Order order;
+
+    private OrderDTO order;
     private EventType status;
+    private String correlationId;
 }

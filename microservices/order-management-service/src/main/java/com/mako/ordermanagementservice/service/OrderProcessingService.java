@@ -1,9 +1,9 @@
 package com.mako.ordermanagementservice.service;
 
-import com.mako.model.Order;
+import com.mako.dto.OrderDTO;
 
 public interface OrderProcessingService {
 
-    Order createOrder(Order order);
+    OrderDTO createOrder(OrderDTO order);
 
 }

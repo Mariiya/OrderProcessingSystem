@@ -1,20 +1,20 @@
-package com.mako.model;
+package com.mako.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigInteger;
-import java.util.Collection;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+public class ProductDTO {
 
     private BigInteger id;
-    private BigInteger accountId;
-    private Collection<Product> products;
-    private double totalPrice;
+    private String name;
+    private ProductTypeDTO type;
+    private int quantity;
+    private double price;
 
 }

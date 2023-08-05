@@ -1,7 +1,7 @@
 package com.mako.paymentprocessingservice.kafka;
 
-import com.mako.model.PaymentInfo;
-import com.mako.model.events.PaymentEvent;
+import com.mako.dto.PaymentInfoDTO;
+import com.mako.event.PaymentEvent;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +16,9 @@ public class PaymentProducer {
     private static final Logger LOGGER = LoggerFactory.getLogger(PaymentProducer.class);
 
     private NewTopic topic;
-    private KafkaTemplate<String, PaymentInfo> kafkaTemplate;
+    private KafkaTemplate<String, PaymentInfoDTO> kafkaTemplate;
 
-    public PaymentProducer(NewTopic topic, KafkaTemplate<String, PaymentInfo> kafkaTemplate) {
+    public PaymentProducer(NewTopic topic, KafkaTemplate<String, PaymentInfoDTO> kafkaTemplate) {
         this.topic = topic;
         this.kafkaTemplate = kafkaTemplate;
     }

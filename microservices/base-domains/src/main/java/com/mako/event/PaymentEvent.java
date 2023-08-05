@@ -1,7 +1,7 @@
-package com.mako.model.events;
+package com.mako.event;
 
-import com.mako.model.EventType;
-import com.mako.model.PaymentInfo;
+import com.mako.dto.EventType;
+import com.mako.dto.PaymentInfoDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PaymentEvent {
 
-    private PaymentInfo paymentInfo;
+    private PaymentInfoDTO paymentInfo;
     private EventType eventType;
+    private String correlationId;
 
 }

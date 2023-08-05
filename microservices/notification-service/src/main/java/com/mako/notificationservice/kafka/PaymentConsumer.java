@@ -1,6 +1,6 @@
 package com.mako.notificationservice.kafka;
 
-import com.mako.model.events.PaymentEvent;
+import com.mako.event.PaymentEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;

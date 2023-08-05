@@ -1,4 +1,4 @@
-package com.mako.model;
+package com.mako.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaymentInfo {
-    private Order order;
+public class PaymentInfoDTO {
+    private OrderDTO order;
     private String details;
 }

@@ -1,8 +1,8 @@
 package com.mako.paymentprocessingservice.service;
 
-import com.mako.model.Order;
+import com.mako.dto.OrderDTO;
 
 public interface PaymentProcessingService {
 
-    void processPayment(Order order);
+    void processPayment(OrderDTO order);
 }
