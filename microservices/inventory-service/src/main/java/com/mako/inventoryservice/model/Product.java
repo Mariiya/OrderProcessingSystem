@@ -9,7 +9,7 @@ import java.math.BigInteger;
 public class Product {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private BigInteger id;
 
     private String name;
