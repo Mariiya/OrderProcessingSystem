@@ -1,11 +1,17 @@
 package com.mako.accountservice.utils;
 
+import com.mako.accountservice.model.PasswordReset;
 import com.mako.accountservice.model.User;
+import com.mako.dto.PasswordChangeDTO;
 import com.mako.dto.UserDTO;
+import com.mako.utils.CommonTool;
 
 public class Converter {
 
     public static User convertToUserEntity(UserDTO userDTO) {
+        if (CommonTool.isEmpty(userDTO)) {
+            return null;
+        }
         User user = new User();
         user.setId(userDTO.getId());
         user.setFirstName(userDTO.getFirstName());
@@ -16,6 +22,9 @@ public class Converter {
     }
 
     public static UserDTO convertToUserDTO(User user) {
+        if (CommonTool.isEmpty(user)) {
+            return null;
+        }
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setFirstName(user.getFirstName());
@@ -23,6 +32,18 @@ public class Converter {
         userDTO.setEmail(user.getEmail());
         userDTO.setRoles(user.getRoles());
         return userDTO;
+    }
+
+    public static PasswordChangeDTO convertToPasswordChangeDTO(PasswordReset passwordReset) {
+        if (CommonTool.isEmpty(passwordReset)) {
+            return null;
+        }
+        PasswordChangeDTO passwordChangeDTO = new PasswordChangeDTO();
+        passwordChangeDTO.setId(passwordReset.getId());
+        passwordChangeDTO.setToken(passwordReset.getToken());
+        passwordChangeDTO.setUser(convertToUserDTO(passwordReset.getUser()));
+        passwordChangeDTO.setNewPassword(passwordReset.getNewPassword());
+        return passwordChangeDTO;
     }
 
 }

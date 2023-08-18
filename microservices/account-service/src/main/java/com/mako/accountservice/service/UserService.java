@@ -11,7 +11,7 @@ public interface UserService {
 
     boolean isUserPresent(User user);
 
-    void passwordResetRequest(PasswordReset data);
+    Long passwordResetRequest(PasswordReset data);
 
     boolean passwordReset(PasswordReset data) throws UserNotFoundException;
 

@@ -9,7 +9,7 @@ import com.mako.accountservice.model.User;
 import com.mako.accountservice.service.UserService;
 import com.mako.accountservice.utils.Converter;
 import com.mako.dto.EventType;
-import com.mako.event.UserEvent;
+import com.mako.event.PasswordChangeEvent;
 import com.mako.utils.EventHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,25 +58,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void passwordResetRequest(PasswordReset data) {
+    public Long passwordResetRequest(PasswordReset data) {
         String token = UUID.randomUUID().toString().substring(0, 10);
+        LOGGER.info("token: " + token);
         User user = userRepository.findByEmail(data.getUser().getEmail());
 
         data.setToken(token);
         data.setExpirationDate(LocalDateTime.now().plusMinutes(2));
         data.setUser(user);
-        resetRepository.save(data);
+        data = resetRepository.save(data);
 
-        kafkaProducer.sendMessage(getUserEvent(data));
+        kafkaProducer.sendPasswordChangeMessage(getPasswordChangeEvent(data));
+
+        return data.getId();
     }
 
     @Override
     public boolean passwordReset(PasswordReset data) throws UserNotFoundException {
         Optional<PasswordReset> resetData = resetRepository.findById(data.getId());
         if (resetData.isPresent()) {
-            User user = getUser(data.getUser().getId());
-            if (resetData.get().getToken().equals(data.getToken())) {
+            PasswordReset ps = resetData.get();
+            User user = userRepository.findByEmail(data.getUser().getEmail());
+            if (ps.getToken().equals(data.getToken()) &&
+                    ps.getExpirationDate().isAfter(LocalDateTime.now().minusMinutes(2))) {
                 user.setPassword(data.getNewPassword());
+                save(user);
                 return true;
             }
         }
@@ -100,11 +106,11 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
     }
 
-    private UserEvent getUserEvent(PasswordReset data) {
-        UserEvent userEvent = new UserEvent();
-        userEvent.setUser(Converter.convertToUserDTO(data.getUser()));
-        userEvent.setEventType(EventType.RESET_PASSWORD);
-        userEvent.setCorrelationId(EventHelper.generateCorrelationId());
-        return userEvent;
+    private PasswordChangeEvent getPasswordChangeEvent(PasswordReset data) {
+        PasswordChangeEvent event = new PasswordChangeEvent();
+        event.setPasswordChangeDTO(Converter.convertToPasswordChangeDTO(data));
+        event.setEventType(EventType.RESET_PASSWORD);
+        event.setCorrelationId(EventHelper.generateCorrelationId());
+        return event;
     }
 }

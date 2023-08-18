@@ -1,4 +1,4 @@
-package proxy;
+package com.mako.ordermanagementservice.proxy;
 
 import com.mako.dto.OrderDTO;
 import org.springframework.cloud.openfeign.FeignClient;

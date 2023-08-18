@@ -6,6 +6,7 @@ import com.mako.accountservice.model.User;
 import com.mako.accountservice.service.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import org.apache.kafka.common.errors.InvalidRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -39,9 +40,9 @@ public class UserController {
 
     @PatchMapping()
     public ResponseEntity<User> updateUser(@RequestBody User user) throws UserNotFoundException {
-        userService.updateUser(user);
-        LOGGER.info(String.format("User updated %s", user));
-        return ResponseEntity.ok(user);
+        User updated = userService.updateUser(user);
+        LOGGER.info(String.format("User updated %s", updated));
+        return ResponseEntity.ok(updated);
     }
 
     @GetMapping("/{id}")
@@ -56,13 +57,16 @@ public class UserController {
     }
 
     @PostMapping("/request-password-reset")
-    public void resetPasswordRequest(@RequestBody PasswordReset data) {
-        userService.passwordResetRequest(data);
+    public ResponseEntity<Long> resetPasswordRequest(@RequestBody PasswordReset data) {
+        return ResponseEntity.ok(userService.passwordResetRequest(data));
     }
 
     @PostMapping("/reset-password")
     public void resetPassword(@RequestBody @Valid PasswordReset data) throws UserNotFoundException {
-        userService.passwordReset(data);
+        boolean result = userService.passwordReset(data);
+        if(!result){
+            throw new InvalidRequestException("Request data is invalid.");
+        }
     }
 
 }

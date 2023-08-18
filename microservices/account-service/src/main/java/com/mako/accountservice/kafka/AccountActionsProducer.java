@@ -1,5 +1,6 @@
 package com.mako.accountservice.kafka;
 
+import com.mako.event.PasswordChangeEvent;
 import com.mako.event.UserEvent;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.slf4j.Logger;
@@ -27,9 +28,17 @@ public class AccountActionsProducer {
 
     public void sendMessage(UserEvent userEvent) {
         Message<UserEvent> message = MessageBuilder.withPayload(userEvent)
-                .setHeader(KafkaHeaders.TOPIC, topic)
+                .setHeader(KafkaHeaders.TOPIC, topic.name())
                 .build();
         kafkaTemplate.send(message);
         LOGGER.info(String.format("User event sent -> %s", userEvent));
+    }
+
+    public void sendPasswordChangeMessage(PasswordChangeEvent event) {
+        Message<PasswordChangeEvent> message = MessageBuilder.withPayload(event)
+                .setHeader(KafkaHeaders.TOPIC, topic.name())
+                .build();
+        kafkaTemplate.send(message);
+        LOGGER.info(String.format("Password change event sent -> %s", event));
     }
 }

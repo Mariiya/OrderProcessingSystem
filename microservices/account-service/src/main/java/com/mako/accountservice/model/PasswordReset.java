@@ -1,6 +1,5 @@
 package com.mako.accountservice.model;
 
-import com.mako.accountservice.annotation.WithinTimeRange;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -24,7 +23,6 @@ public class PasswordReset {
     @NotBlank
     private String newPassword;
 
-    @WithinTimeRange
     private LocalDateTime expirationDate;
 
     public Long getId() {
