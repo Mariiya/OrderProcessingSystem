@@ -6,8 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "${microservices.inventory-service.name}",
-        url = "localhost:8082")
+@FeignClient(name = "${microservices.inventory-service.name}")
 public interface InventoryServiceProxy {
 
     @PostMapping("/inventory/orders")
