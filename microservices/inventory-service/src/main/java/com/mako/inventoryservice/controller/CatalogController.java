@@ -29,7 +29,7 @@ public class CatalogController {
 
     @PostMapping("/product")
     public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDTO) {
-        ProductDTO newProduct = service.addProduct(productDTO);
+        ProductDTO newProduct = service.saveProduct(productDTO);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")

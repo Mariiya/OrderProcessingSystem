@@ -11,7 +11,7 @@ public interface CatalogService {
 
     ProductDTO getProductById(BigInteger id);
 
-    ProductDTO addProduct(ProductDTO product);
+    ProductDTO saveProduct(ProductDTO product);
 
     ProductDTO updateProduct(ProductDTO product);
 

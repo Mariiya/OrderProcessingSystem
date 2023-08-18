@@ -43,7 +43,7 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
-    public ProductDTO addProduct(ProductDTO productDTO) {
+    public ProductDTO saveProduct(ProductDTO productDTO) {
         if (CommonTool.isEmpty(productDTO)) {
             return productDTO;
         }
@@ -54,7 +54,12 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     public ProductDTO updateProduct(ProductDTO productDTO) {
-        return addProduct(productDTO);
+        ProductDTO updated = getProductById(productDTO.getId());
+        updated.setName(productDTO.getName());
+        updated.setPrice(productDTO.getPrice());
+        updated.setQuantity(productDTO.getQuantity());
+        updated.setType(productDTO.getType());
+        return saveProduct(updated);
     }
 
     @Override

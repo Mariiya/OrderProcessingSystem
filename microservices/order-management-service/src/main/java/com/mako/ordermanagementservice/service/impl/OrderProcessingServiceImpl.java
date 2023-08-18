@@ -31,7 +31,7 @@ public class OrderProcessingServiceImpl implements OrderProcessingService {
         OrderDTO newOrder = inventoryServiceProxy.storeOrder(order).getBody();
 
         OrderEvent orderEvent = new OrderEvent();
-        orderEvent.setStatus(EventType.CREATE_ORDER);
+        orderEvent.setEventType(EventType.CREATE_ORDER);
         orderEvent.setOrder(newOrder);
         orderEvent.setCorrelationId(EventHelper.generateCorrelationId());
 

@@ -37,6 +37,6 @@ public class PaymentProcessingServiceImpl implements PaymentProcessingService {
         }
 
         PaymentInfoDTO info = new PaymentInfoDTO(order, "Payment processed successfully");
-        producer.sendMessage(new PaymentEvent(info, EventType.PROCESSED, EventHelper.generateCorrelationId()));
+        producer.sendMessage(new PaymentEvent(EventType.PAYMENT_PROCESSED, EventHelper.generateCorrelationId(), info));
     }
 }

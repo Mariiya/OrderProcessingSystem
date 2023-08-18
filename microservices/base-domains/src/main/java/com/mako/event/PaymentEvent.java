@@ -2,17 +2,17 @@ package com.mako.event;
 
 import com.mako.dto.EventType;
 import com.mako.dto.PaymentInfoDTO;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
 @NoArgsConstructor
-@AllArgsConstructor
-public class PaymentEvent {
+@Setter
+@Getter
+public class PaymentEvent extends AbstractEvent {
 
     private PaymentInfoDTO paymentInfo;
-    private EventType eventType;
-    private String correlationId;
 
+    public PaymentEvent(EventType eventType, String correlationId, PaymentInfoDTO info) {
+        super(eventType, correlationId);
+        this.paymentInfo = info;
+    }
 }

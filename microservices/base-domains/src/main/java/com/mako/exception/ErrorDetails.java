@@ -1,4 +1,4 @@
-package com.mako.inventoryservice.exception;
+package com.mako.exception;
 
 import java.time.LocalDateTime;
 

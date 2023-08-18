@@ -2,16 +2,17 @@ package com.mako.event;
 
 import com.mako.dto.EventType;
 import com.mako.dto.OrderDTO;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@AllArgsConstructor
+@Setter
+@Getter
 @NoArgsConstructor
-public class OrderEvent {
+public class OrderEvent extends AbstractEvent {
 
     private OrderDTO order;
-    private EventType status;
-    private String correlationId;
+
+    public OrderEvent(EventType eventType, String correlationId, OrderDTO order) {
+        super(eventType, correlationId);
+        this.order = order;
+    }
 }
