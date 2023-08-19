@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/inventory")
+@RequestMapping("/inventory-service")
 public class InventoryController {
     private static final Logger LOGGER = LoggerFactory.getLogger(InventoryController.class);
     private final InventoryService service;

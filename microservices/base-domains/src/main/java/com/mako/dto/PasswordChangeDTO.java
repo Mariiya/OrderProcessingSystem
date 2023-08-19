@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigInteger;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PasswordChangeDTO {
-    private Long id;
+    private BigInteger id;
     private UserDTO user;
     private String token;
     private String newPassword;

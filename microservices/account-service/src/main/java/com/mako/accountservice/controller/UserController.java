@@ -13,10 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.math.BigInteger;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/account-service/user")
 public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
@@ -46,7 +47,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable @NotNull Long id) throws UserNotFoundException {
+    public ResponseEntity<User> getUser(@PathVariable @NotNull BigInteger id) throws UserNotFoundException {
         return ResponseEntity.ok(userService.getUser(id));
     }
 
@@ -57,7 +58,7 @@ public class UserController {
     }
 
     @PostMapping("/request-password-reset")
-    public ResponseEntity<Long> resetPasswordRequest(@RequestBody PasswordReset data) {
+    public ResponseEntity<BigInteger> resetPasswordRequest(@RequestBody PasswordReset data) {
         return ResponseEntity.ok(userService.passwordResetRequest(data));
     }
 

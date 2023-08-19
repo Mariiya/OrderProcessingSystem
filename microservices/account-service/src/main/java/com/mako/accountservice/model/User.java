@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
+import java.math.BigInteger;
 import java.util.Collection;
 
 @Entity
@@ -12,7 +13,7 @@ import java.util.Collection;
 public class User {
     @Id
     @GeneratedValue
-    private Long id;
+    private BigInteger id;
 
     @NotBlank(message = "First name is required")
     private String firstName;
@@ -34,7 +35,7 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String firstName, String lastName, String email, String password, Collection<UserRole> roles) {
+    public User(BigInteger id, String firstName, String lastName, String email, String password, Collection<UserRole> roles) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -43,11 +44,11 @@ public class User {
         this.roles = roles;
     }
 
-    public Long getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 

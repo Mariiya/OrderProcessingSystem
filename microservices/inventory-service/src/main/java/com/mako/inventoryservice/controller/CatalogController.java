@@ -11,7 +11,7 @@ import java.math.BigInteger;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/catalog/v1")
+@RequestMapping("/inventory-service/catalog/v1")
 public class CatalogController {
 
     private final CatalogService service;
@@ -21,7 +21,7 @@ public class CatalogController {
         this.service = service;
     }
 
-    @GetMapping("product/{id}")
+    @GetMapping("/product/{id}")
     public ResponseEntity<ProductDTO> getProductById(@PathVariable BigInteger id) {
         ProductDTO product = service.getProductById(id);
         return ResponseEntity.ok(product);

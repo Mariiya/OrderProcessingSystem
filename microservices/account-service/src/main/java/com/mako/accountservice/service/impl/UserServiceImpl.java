@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(Long id) throws UserNotFoundException {
+    public User getUser(BigInteger id) throws UserNotFoundException {
 
         Optional<User> user = userRepository.findById(id);
         if (user.isEmpty()) {
@@ -58,7 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long passwordResetRequest(PasswordReset data) {
+    public BigInteger passwordResetRequest(PasswordReset data) {
         String token = UUID.randomUUID().toString().substring(0, 10);
         LOGGER.info("token: " + token);
         User user = userRepository.findByEmail(data.getUser().getEmail());

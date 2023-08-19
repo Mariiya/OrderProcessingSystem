@@ -6,13 +6,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 @Entity
 public class PasswordReset {
     @Id
     @GeneratedValue
-    private Long id;
+    private BigInteger id;
 
     @ManyToOne
     private User user;
@@ -25,11 +26,11 @@ public class PasswordReset {
 
     private LocalDateTime expirationDate;
 
-    public Long getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 

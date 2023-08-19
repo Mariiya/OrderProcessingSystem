@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "${microservices.inventory-service.name}")
 public interface InventoryServiceProxy {
 
-    @PostMapping("/inventory/orders")
+    @PostMapping("/inventory-service/orders")
     ResponseEntity<OrderDTO> storeOrder(@RequestBody OrderDTO orderDTO);
 }
