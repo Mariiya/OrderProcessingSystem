@@ -1,9 +1,6 @@
-package com.mako.accountservice.model;
+package com.mako.authenticationservice.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 import java.math.BigInteger;
@@ -15,8 +12,7 @@ public class PasswordReset {
     @GeneratedValue
     private BigInteger id;
 
-    @ManyToOne
-    private User user;
+    private String userEmail;
 
     @NotBlank
     private String token;
@@ -34,12 +30,12 @@ public class PasswordReset {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public String getToken() {

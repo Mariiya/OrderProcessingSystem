@@ -1,4 +1,4 @@
-package com.mako.accountservice.kafka;
+package com.mako.authenticationservice.kafka;
 
 import com.mako.event.PasswordChangeEvent;
 import com.mako.event.UserEvent;
@@ -14,14 +14,14 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class AccountActionsProducer {
+public class AuthenticationProducer {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AccountActionsProducer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationProducer.class);
     private final NewTopic topic;
     private final KafkaTemplate<String, UserEvent> kafkaTemplate;
 
     @Autowired
-    public AccountActionsProducer(NewTopic topic, KafkaTemplate<String, UserEvent> kafkaTemplate) {
+    public AuthenticationProducer(NewTopic topic, KafkaTemplate<String, UserEvent> kafkaTemplate) {
         this.topic = topic;
         this.kafkaTemplate = kafkaTemplate;
     }

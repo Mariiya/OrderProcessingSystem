@@ -1,6 +1,6 @@
-package com.mako.accountservice.repository;
+package com.mako.authenticationservice.repository;
 
-import com.mako.accountservice.model.PasswordReset;
+import com.mako.authenticationservice.model.PasswordReset;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.math.BigInteger;

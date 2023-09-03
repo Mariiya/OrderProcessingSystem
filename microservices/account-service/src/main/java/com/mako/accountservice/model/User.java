@@ -26,8 +26,6 @@ public class User {
     @Column(unique = true)
     private String email;
 
-    private String password;
-
     @ElementCollection
     @Enumerated(EnumType.STRING)
     private Collection<UserRole> roles;
@@ -35,13 +33,11 @@ public class User {
     public User() {
     }
 
-    public User(BigInteger id, String firstName, String lastName, String email, String password, Collection<UserRole> roles) {
+    public User(BigInteger id, String firstName, String lastName, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
-        this.roles = roles;
     }
 
     public BigInteger getId() {
@@ -76,14 +72,6 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public Collection<UserRole> getRoles() {
         return roles;
     }
@@ -99,7 +87,6 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", roles=" + roles +
                 '}';
     }
 }

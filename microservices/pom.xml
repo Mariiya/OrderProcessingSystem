@@ -9,6 +9,8 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>account-service</module>
+        <module>authentication-service</module>
+        <module>naming-server</module>
         <module>api-gateway</module>
         <module>base-domains</module>
         <module>config-server</module>

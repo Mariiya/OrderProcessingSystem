@@ -24,7 +24,7 @@ public class ResponseEntityExceptionHandler extends org.springframework.web.serv
 
     }
 
-    @ExceptionHandler(UserNotFoundException.class)
+    @ExceptionHandler(AccountNotFoundException.class)
     public final ResponseEntity<ErrorDetails> handleUserNotFoundException(Exception ex, WebRequest request) throws Exception {
         ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(),
                 ex.getMessage(), request.getDescription(false));

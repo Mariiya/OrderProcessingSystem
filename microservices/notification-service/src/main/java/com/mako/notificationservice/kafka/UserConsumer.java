@@ -9,7 +9,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AccountConsumer {
+public class UserConsumer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderConsumer.class);
 
@@ -18,7 +18,7 @@ public class AccountConsumer {
 
     private final EmailNotificationService emailService;
 
-    public AccountConsumer(EmailNotificationService emailService) {
+    public UserConsumer(EmailNotificationService emailService) {
         this.emailService = emailService;
     }
 
@@ -26,7 +26,7 @@ public class AccountConsumer {
             groupId = "${spring.kafka.consumer.group-id}")
     public void consumePasswordChangeRequest(PasswordChangeEvent event) {
         LOGGER.info(String.format("Password change event received -> %s", event));
-        emailService.sendMessage(emailFrom, event.getPasswordChangeDTO().getUser().getEmail(),
+        emailService.sendMessage(emailFrom, event.getPasswordChangeDTO().getUserEmail(),
                 String.format("Token: %s", event.getPasswordChangeDTO().getToken()));
     }
 

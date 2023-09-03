@@ -11,7 +11,7 @@ import java.math.BigInteger;
 @NoArgsConstructor
 public class PasswordChangeDTO {
     private BigInteger id;
-    private UserDTO user;
+    private String userEmail;
     private String token;
     private String newPassword;
 }

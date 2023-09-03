@@ -1,4 +1,4 @@
-package com.mako.accountservice.configuration;
+package com.mako.authenticationservice.configuration;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,7 +9,7 @@ import org.springframework.kafka.config.TopicBuilder;
 @Configuration
 public class KafkaTopicConfig {
 
-    @Value("${kafka.order.topic.name}")
+    @Value("${kafka.user.topic.name}")
     private String topicName;
 
     @Bean
