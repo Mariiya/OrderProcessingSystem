@@ -1,0 +1,175 @@
+version: '3.7'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 22181:2181
+    networks:
+      - order-processing-network
+
+  kafka:
+    container_name: kafka
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - "19092:19092"
+    networks:
+      - order-processing-network
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_INTERNAL://localhost:19092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+  config-server:
+    image: microservices/mako-config-server:0.0.1-SNAPSHOT
+    ports:
+      - "8888:8888"
+    networks:
+      - order-processing-network
+
+  naming-server:
+    image: microservices/mako-naming-server:0.0.1-SNAPSHOT
+    ports:
+      - "8761:8761"
+    networks:
+      - order-processing-network
+
+  api-gateway:
+    image: microservices/mako-api-gateway:0.0.1-SNAPSHOT
+    container_name: api-gateway
+    ports:
+      - "8765:8765"
+    networks:
+      - order-processing-network
+    depends_on:
+      - config-server
+      - naming-server
+    restart: always
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8888
+      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY: TRACE
+
+  authentication-service:
+    image: microservices/mako-authentication-service:0.0.1-SNAPSHOT
+    ports:
+      - "8085:8085"
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8888
+    depends_on:
+      - config-server
+      - naming-server
+      - api-gateway
+      - kafka
+    restart: always
+    command: >
+      sh -c "echo 'Waiting for 30 seconds before starting the microservice...'; sleep 30 && java -jar authentication-service-0.0.1-SNAPSHOT.jar"
+    networks:
+      - order-processing-network
+  account-service:
+    image: microservices/mako-account-service:0.0.1-SNAPSHOT
+    ports:
+      - "8084:8084"
+    networks:
+      - order-processing-network
+    depends_on:
+      - config-server
+      - naming-server
+      - kafka
+      - api-gateway
+    restart: always
+    command: >
+      sh -c "echo 'Waiting for 30 seconds before starting the microservice...'; sleep 30 && java -jar account-service-0.0.1-SNAPSHOT.jar"
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8888
+
+  inventory-service:
+    image: microservices/mako-inventory-service:0.0.1-SNAPSHOT
+    ports:
+      - "8082:8082"
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8888
+    depends_on:
+      - config-server
+      - naming-server
+      - kafka
+      - api-gateway
+    command: >
+      sh -c "echo 'Waiting for 30 seconds before starting the microservice...'; sleep 30 && java -jar inventory-service-0.0.1-SNAPSHOT.jar"
+    restart: always
+    networks:
+      - order-processing-network
+
+  order-management-service:
+    image: microservices/mako-order-management-service:0.0.1-SNAPSHOT
+    ports:
+      - "8080:8080"
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8888
+    depends_on:
+      - config-server
+      - naming-server
+      - kafka
+      - api-gateway
+    command: >
+      sh -c "echo 'Waiting for 30 seconds before starting the microservice...'; sleep 30 && java -jar inventory-service-0.0.1-SNAPSHOT.jar"
+    restart: always
+    networks:
+      - order-processing-network
+
+  payment-processing-service:
+    image: microservices/mako-payment-processing-service:0.0.1-SNAPSHOT
+    ports:
+      - "8083:8083"
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8888
+    depends_on:
+      - config-server
+      - naming-server
+      - kafka
+      - api-gateway
+    command: >
+      sh -c "echo 'Waiting for 30 seconds before starting the microservice...'; sleep 30 && java -jar inventory-service-0.0.1-SNAPSHOT.jar"
+    restart: always
+    networks:
+      - order-processing-network
+
+  notification-service:
+    image: microservices/mako-notification-service:0.0.1-SNAPSHOT
+    ports:
+      - "8086:8086"
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8888
+      SPRING.MAIL.USERNAME: test@gmail.com
+      SPRING.MAIL.PASSWORD: test
+    depends_on:
+      - config-server
+      - naming-server
+      - kafka
+      - api-gateway
+    command: >
+      sh -c "echo 'Waiting for 30 seconds before starting the microservice...'; sleep 30 && java -jar inventory-service-0.0.1-SNAPSHOT.jar"
+    restart: always
+    networks:
+      - order-processing-network
+
+networks:
+  order-processing-network:

@@ -2,6 +2,8 @@ package com.mako.apigateway.filter;
 
 import com.mako.apigateway.util.JwtUtil;
 import org.apache.http.HttpHeaders;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
@@ -11,7 +13,7 @@ import reactor.core.publisher.Mono;
 
 @Component
 public class AuthenticationFilter extends AbstractGatewayFilterFactory<AuthenticationFilter.Config> {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationFilter.class);
     private final RouteValidator validator;
     private final JwtUtil jwtUtil;
 
@@ -38,6 +40,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                 try {
                     jwtUtil.validateToken(authHeader);
                 } catch (Exception e) {
+                    LOGGER.error(e.getMessage(), e);
                     exchange.getResponse().setStatusCode(HttpStatusCode.valueOf(403));
                     return Mono.empty();
                 }

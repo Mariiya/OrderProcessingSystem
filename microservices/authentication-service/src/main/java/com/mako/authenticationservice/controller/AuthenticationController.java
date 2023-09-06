@@ -63,13 +63,15 @@ public class AuthenticationController {
 
     @GetMapping("/validate")
     public ResponseEntity<String> validateToken(@RequestParam("token") String token) {
+       LOGGER.info("Validate token started");
         try {
             authService.validateToken(token);
         } catch (Exception e) {
+            LOGGER.info("Token is NOT valid. " + e.getMessage());
             return ResponseEntity.status(403).build();
         }
-
-        return ResponseEntity.ok("Token is valid");
+        LOGGER.info("Token is valid.");
+        return ResponseEntity.ok("Token is valid.");
     }
 
     @PostMapping("/request-password-reset")
